@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4 python
+#!/usr/bin/python3.4
 import pygal
 from pygal.style import DarkSolarizedStyle
 from models import LightTimeStamp, TemperatureTimeStamp, Base
@@ -19,7 +19,7 @@ def all_temperature_handler():
     return jsonify( temperatures = [each.serialize for each in temperatures])
 
 @app.route('/temp/chart')
-def get_lights_view():
+def get_tempers_view():
     temperatures = session.query(LightTimeStamp).all()
     times= [each.getTime for each in temperatures ]
     tempValues=[each.getTemp for each in temperatures ]
