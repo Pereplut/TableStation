@@ -4,7 +4,6 @@ from sqlalchemy import Column,Integer,String, DateTime, DDL, event
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
-
 from sqlalchemy import create_engine
 
 Base = declarative_base()

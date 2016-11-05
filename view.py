@@ -13,7 +13,6 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 app = Flask(__name__)
 
-
 @app.route('/temp/all',methods=['GET'])
 def all_temperature_handler():
     temperatures= session.query(TemperatureTimeStamp).all()
