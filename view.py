@@ -20,7 +20,7 @@ def all_temperature_handler():
 
 @app.route('/temp/chart')
 def get_tempers_view():
-    temperatures = session.query(LightTimeStamp).all()
+    temperatures = session.query(TemperatureTimeStamp).all()
     times= [each.getTime for each in temperatures ]
     tempValues=[each.getTemp for each in temperatures ]
     title = 'temperature chart'
