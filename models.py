@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4 python
+#!/usr/bin/python3.4
 # -*- coding: utf-8 -*-
 from sqlalchemy import Column,Integer,String, DateTime, DDL, event
 from sqlalchemy.orm import validates
