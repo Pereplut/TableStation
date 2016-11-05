@@ -32,7 +32,6 @@ class TemperatureTimeStamp(Base):
     __tablename__ = 'thermometer'
     id = Column(Integer,primary_key=True,autoincrement=True)
     temper_inC_Value = Column(Integer)
-    #timeStamp = Column(String(32))
     timeStamp =Column(DateTime, default=datetime.datetime.now)
 
     @property
@@ -42,6 +41,14 @@ class TemperatureTimeStamp(Base):
             'timeStamp': self.timeStamp,
             'id': self.id
         }
+
+    @property
+    def getTemp(self):
+        return self.temper_inC_Value
+
+    @property
+    def getTime(self):
+        return self.id  # TODO make wrapper for timeStamp value and remove the ID from this row
 
 engine = create_engine('sqlite:///tableStation.db')
 Base.metadata.create_all(engine)
