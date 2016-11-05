@@ -1,4 +1,6 @@
 #!/usr/bin/python3.4 python
+import pygal
+from pygal.style import DarkSolarizedStyle
 from models import LightTimeStamp, TemperatureTimeStamp, Base
 from flask import Flask, jsonify, request
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,7 +14,6 @@ session = DBSession()
 app = Flask(__name__)
 
 
-
 @app.route('/temp/all',methods=['GET'])
 def all_temperature_handler():
     temperatures= session.query(TemperatureTimeStamp).all()
@@ -23,6 +24,27 @@ def all_lightValues_handler():
     lumiens= session.query(LightTimeStamp).all()
     return jsonify( lumien_values = [each.serialize for each in lumiens])
 
+@app.route('/light/chart')
+def get_lights_view():
+    lumiens = session.query(LightTimeStamp).all()
+    times= [each.getTime for each in lumiens]
+    lightValues=[each.getLight for each in lumiens]
+    title = 'lumen chart'
+    bar_chart = pygal.StackedLine(width=1200, height=600,
+                explicit_size=True, title=title, fill=True)
+    bar_chart.x_labels = times
+    bar_chart.add('lumiens in X', lightValues)
+    html = """
+        <html>
+             <head>
+                  <title>%s</title>
+             </head>
+              <body>
+                 %s
+             </body>
+        </html>
+        """ % (title, bar_chart.render())
+    return html
 
 if __name__ == '__main__':
     app.debug = True

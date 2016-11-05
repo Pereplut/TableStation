@@ -22,7 +22,12 @@ class LightTimeStamp(Base):
             'timeStamp':self.timeStamp,
             'id':self.id
         }
-
+    @property
+    def getLight(self):
+        return self.lightValue
+    @property
+    def getTime(self):
+        return self.id    # TODO make wrapper for timeStamp value and remove the ID from this row
 
 class TemperatureTimeStamp(Base):
     __tablename__ = 'thermometer'
