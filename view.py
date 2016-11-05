@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4 python
+#!/usr/bin/python3.4
 from models import LightTimeStamp, TemperatureTimeStamp, Base
 from flask import Flask, jsonify, request
 from sqlalchemy.ext.declarative import declarative_base
