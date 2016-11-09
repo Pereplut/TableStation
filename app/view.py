@@ -1,11 +1,10 @@
 #!/usr/bin/python3.4
 import pygal
-from pygal.style import DarkSolarizedStyle
-from models import LightTimeStamp, TemperatureTimeStamp, Base
-from flask import Flask, jsonify, request
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from app import Flask, jsonify
+from app.models import LightTimeStamp, TemperatureTimeStamp, Base
 
 engine = create_engine('sqlite:///tableStation.db')
 Base.metadata.bind = engine
@@ -66,7 +65,3 @@ def get_lights_view():
         </html>
         """ % (title, bar_chart.render())
     return html
-
-if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0', port=5000)
