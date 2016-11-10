@@ -3,14 +3,10 @@ import pygal
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app import Flask, jsonify
+from flask import Flask, jsonify,render_template
 from app.models import LightTimeStamp, TemperatureTimeStamp, Base
+from app import  app,session
 
-engine = create_engine('sqlite:///tableStation.db')
-Base.metadata.bind = engine
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
-app = Flask(__name__)
 
 @app.route('/temp/all',methods=['GET'])
 def all_temperature_handler():
@@ -65,3 +61,30 @@ def get_lights_view():
         </html>
         """ % (title, bar_chart.render())
     return html
+
+
+@app.route('/charts')
+def get_combined_charts():
+    graph = pygal.Line()
+    graph.title = 'mock title'
+    graph.x_labels=['1','2','3','4','5']
+    graph.add('value 1',[21,22,23,24,25])
+    graph.add('value w',[31,32,33,34,35])
+    graph_data= graph.render_data_uri()
+    return render_template("graphing.html",graph_data=graph_data)
+
+
+@app.route('/')
+def is_alive():
+    respond = ("<html>\n"
+               "             <head>\n"
+               "                  <title>TitleRoot</title>\n"
+               "             </head>\n"
+               "              <body>\n"
+               "                I'm ok!\n"
+               "             </body>\n"
+               "        </html>\n"
+               "        ")
+    return respond
+
+
