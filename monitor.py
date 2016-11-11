@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4 python
+#!/usr/bin/python3.4
 import time
 
 import serial
