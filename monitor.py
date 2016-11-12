@@ -44,11 +44,11 @@ def readFrom_Serial(serial_instance):
         responce = serial_instance.recive()
         responce.strip(' \t\n\r')
         print (responce)
-        if responce !='':
-            temperature, light=responce.split(',')
+        if responce != '':
+            temperature, light = responce.split(',')
             Temperature= TemperatureTimeStamp(temper_inC_Value=temperature)
             session.add(Temperature)
-            Light =  LightTimeStamp(lightValue=light)
+            Light = LightTimeStamp(lightValue=light)
             session.add(Light)
             session.commit()
         time.sleep(60)
