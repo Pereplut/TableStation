@@ -32,8 +32,8 @@ def get_sensor_view(sensor):
         tableName = LightTimeStamp
         measurables = 'kinda lumiens'
     values = session.query(tableName).order_by(tableName.id.desc()).limit(288)
-    times = [each.getSensors for each in values]
-    sensorValues = [each.getTemp for each in values]
+    times = [each.getTime for each in values]
+    sensorValues = [each.getSensors for each in values]
     title = 'chart'
     bar_chart = pygal.StackedLine(width=1200, height=600,
                                   explicit_size=True, title=title, fill=True)
