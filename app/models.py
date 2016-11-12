@@ -22,7 +22,7 @@ class LightTimeStamp(Base):
             'id':self.id
         }
     @property
-    def getLight(self):
+    def getSensors(self):
         return self.lightValue
     @property
     def getTime(self):
@@ -43,7 +43,7 @@ class TemperatureTimeStamp(Base):
         }
 
     @property
-    def getTemp(self):
+    def getSensors(self):
         return self.temper_inC_Value
 
     @property
