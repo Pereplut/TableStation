@@ -18,6 +18,7 @@ def all_json_handler(sensor, value=1):
             values = session.query(TemperatureTimeStamp).order_by(TemperatureTimeStamp.id.desc()).limit(value)
         elif sensor == 'light':
             values = session.query(LightTimeStamp).order_by(LightTimeStamp.id.desc()).limit(value)
+        values=values[::-1]
         return jsonify(values=[each.serialize for each in values])
 
 
@@ -32,6 +33,7 @@ def get_sensor_view(sensor):
         tableName = LightTimeStamp
         measurables = 'kinda lumiens'
     values = session.query(tableName).order_by(tableName.id.desc()).limit(288)
+    values=values[::-1]
     times = [each.getTime for each in values]
     sensorValues = [each.getSensors for each in values]
     title = 'chart'

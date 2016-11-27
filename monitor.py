@@ -1,10 +1,8 @@
 #!/usr/bin/python3.4
 import time
-
 import serial
 from sqlalchemy import create_engine
 from sqlalchemy.orm import  sessionmaker
-
 from app.models import LightTimeStamp, TemperatureTimeStamp, Base
 
 engine = create_engine('sqlite:///tableStation.db')
@@ -13,8 +11,8 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 class ArduinoSerial():
-    def __init__(self, port, baudrate=9600,bytesize=serial.EIGHTBITS,stopbits=serial.STOPBITS_ONE,
-                 parity=serial.PARITY_NONE,timeout=20):
+    def __init__(self, port, baudrate=115200,bytesize=serial.EIGHTBITS,stopbits=serial.STOPBITS_ONE,
+                 parity=serial.PARITY_NONE,timeout=5):
         self.ser=serial.Serial(port=port,baudrate=baudrate,bytesize=bytesize,
                                stopbits=stopbits,parity=parity,timeout=timeout)
     def open(self):
@@ -35,18 +33,18 @@ class ArduinoSerial():
         self.ser.flush()
         return self.ser.readline().decode('utf-8')
 
-serialCom=ArduinoSerial(port='COM17')
+serialCom = ArduinoSerial(port='/dev/ttyACM0')
 
 def readFrom_Serial(serial_instance):
     while True:
         #serial_instance.flushInput()
-        serial_instance.send("get Data")
+        serial_instance.send("1")
         responce = serial_instance.recive()
         responce.strip(' \t\n\r')
-        print (responce)
+        #print (responce)
         if responce != '':
             temperature, light = responce.split(',')
-            Temperature= TemperatureTimeStamp(temper_inC_Value=temperature)
+            Temperature = TemperatureTimeStamp(temper_inC_Value=temperature)
             session.add(Temperature)
             Light = LightTimeStamp(lightValue=light)
             session.add(Light)
