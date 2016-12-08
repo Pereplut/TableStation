@@ -4,7 +4,7 @@ import logging
 import serial
 from sqlalchemy import create_engine
 from sqlalchemy.orm import  sessionmaker
-from app.models import LightTimeStamp, TemperatureTimeStamp, Base
+from app.models import LightTimeStamp, TemperatureTimeStamp,DHT11Table, Base
 
 module_logger = logging.getLogger('app.mon_While')
 engine = create_engine('sqlite:///tableStation.db')
@@ -65,4 +65,21 @@ def readFrom_Serial(serial_instance):
     serial_instance.close()
 
 #readFrom_Serial(serialCom)
+def read_dht11_serial(serial_instance):
+    while True:
+        #serial_instance.flushInput()
+        serial_instance.send("1")
+        responce = serial_instance.recive()
+        module_logger.info('received data from Arduino, %s')
+        responce.strip(' \t\n\r')
+        #print (responce)
+        if responce != '':
+            status, humidity, temperature = responce.split(',')
+            module_logger.info('sending data to DB')
+            dht_sensor = DHT11Table(temperature=temperature, humidity=humidity)
+            session.add(dht_sensor)
+            session.commit()
+            module_logger.info('commit has been performed')
+        time.sleep(60)
+    serial_instance.close()
 

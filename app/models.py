@@ -7,6 +7,24 @@ import datetime
 from sqlalchemy import create_engine
 
 Base = declarative_base()
+class DHT11Table(Base):
+    __tablename__ = 'dht11'
+    id = Column(Integer,primary_key=True,autoincrement=True)
+    temperature = Column(String)
+    humidity = Column(String)
+    timeStamp = Column(DateTime,default=datetime.datetime.now())
+
+    @property
+    def getHumidity(self):
+        return self.humidity
+
+    @property
+    def getTemperature(self):
+        return self.temperature
+
+    @property
+    def getHumidity(self):
+        return self.timeStamp
 
 class LightTimeStamp(Base):
     __tablename__ = 'photosell'
