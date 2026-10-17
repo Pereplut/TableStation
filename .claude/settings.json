@@ -1,0 +1,22 @@
+{
+  "enabledPlugins": {
+    "sdd-engineering@dev-digest-ai-marketplace": false,
+    "engineering-paved-path@dev-digest-ai-marketplace": false,
+    "research-tools@dev-digest-ai-marketplace": false,
+    "architecture-review@dev-digest-ai-marketplace": false
+  },
+  "extraKnownMarketplaces": {
+    "dev-digest-ai-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "Pereplut/dev-digest-ai-marketplace"
+      }
+    },
+    "dev-digest-ai-marketplace-stable": {
+      "source": {
+        "source": "url",
+        "url": "https://raw.githubusercontent.com/Pereplut/dev-digest-ai-marketplace/main/channels/stable/.claude-plugin/marketplace.json"
+      }
+    }
+  }
+}
